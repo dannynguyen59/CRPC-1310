@@ -21,6 +21,7 @@ void setup() {
   bgImg.loadPixels();
 }
 void draw() {
+  image(bgImg,500,500);
 
 }
 
