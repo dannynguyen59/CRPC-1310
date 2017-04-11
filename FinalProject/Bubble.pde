@@ -9,11 +9,20 @@ class Bubble {
   float xAccel;
   float yAccel;
   int transparency;
+  boolean bubblePopped = false;
   
-  void newBubble() {
-    
-    }
-    
+  void newBubble() { 
+  }
+  
+  void popBubble() {
+  }
+  
+  void bubbleTransparency() {
+  }
+  
+  void setLocation() {
+  }
+  
   }
   
   
