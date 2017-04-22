@@ -9,8 +9,9 @@ Danny Nguyen
  x Bubbles rise naturally 
  x Bubbles bounded by window
  x Bubbles popped by users when mousePressed
- - Bubbles will fade and show splash effect
- - Splash effect will be mini shapes exploding out of bubble
+ x Bubbles will fade and show splash effect
+ x Splash effect will be mini shapes exploding out of bubble
+ - Make splash/extra shapes disappear after some time
  */
 
 ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
@@ -66,6 +67,7 @@ void draw() {
         float x2 = random(0, 0.1);
         float newSize = toPop.aSize/16;
         float y1 = random(0.0, 0.2);
+       
         a1.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1);
         a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y1);
         a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1);
@@ -79,7 +81,7 @@ void draw() {
   }
 
   // draw an indicator of where the cursor is
-  stroke(255, 0, 0, 50);
+  stroke(0, 0, 255, 50);
   strokeWeight(1);
   line(mouseX-5, mouseY-5, mouseX+5, mouseY+5);
   line(mouseX+5, mouseY-5, mouseX-5, mouseY+5);
