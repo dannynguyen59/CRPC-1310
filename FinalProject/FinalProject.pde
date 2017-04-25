@@ -5,7 +5,7 @@ Danny Nguyen
  Credits to "Simple Asteroids Game" by Donya Quick
  
  goals : 
- - Bubbles appear when you press your spacebar key
+ x Bubbles appear when you press your spacebar key
  x Bubbles rise naturally 
  x Bubbles bounded by window
  x Bubbles popped by users when mousePressed
@@ -13,14 +13,21 @@ Danny Nguyen
  x Splash effect will be mini shapes exploding out of bubble
  x Make splash/extra shapes disappear after some time
  
- ISSUES : It gets laggy, how to use key function, further aesthetics
+ -aesthetics
  */
 
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
-long defMin = 500;
-long defMax = 2000;
-long minSpawnTime = 1000;
-long maxSpawnTime = 2000;
+long defMin = 800;
+long defMax = 1000;
+long minSpawnTime = 500;
+long maxSpawnTime = 1000;
 long nextSpawnTime = round(random(minSpawnTime, maxSpawnTime));
 float mSize = 30;
 boolean canPop = true;
@@ -29,20 +36,30 @@ int framesToPop = 50;
 PImage bgImg;
 PImage clicker;
 
+Minim m;
+AudioPlayer handPop;
+AudioPlayer manualPop;
+
 
 
 void setup() {
   frameRate(60);
   size(800, 800);
   noCursor();
+  
   bgImg = loadImage("cloudbg.jpg");
   bgImg.loadPixels();
   clicker = loadImage("bird.jpg");
   clicker.loadPixels();
+  
+  m = new Minim(this);
+  handPop = m.loadFile("Blop.mp3");
+  manualPop = m.loadFile("WaterDrop.mp3");
 }
 
 void draw() { 
-  image(bgImg,0,0);
+  image(bgImg, 0, 0);
+
   if (currFrames >= framesToPop) {
     canPop = true;
     currFrames = 0;
@@ -53,7 +70,7 @@ void draw() {
   //fade out bubble trails
   fill(255, 50);
   rect(-5, -5, width+5, height+5);
-  
+
 
   //time spawning of Bubbles
   if (millis() > nextSpawnTime) {
@@ -61,8 +78,11 @@ void draw() {
     long upper = round(maxSpawnTime);
     nextSpawnTime = nextSpawnTime + round(random(lower, upper));
 
-
-    bubbles.add(new Bubble()); //SPAWN BUBBLES
+    if (key == ' ' ) {
+      bubbles.add(new Bubble()); //SPAWN BUBBLES
+    } else if (key == 'c') {
+      bubbles.remove(new Bubble()); // STOPS THE SPAWN
+    }
   }
   // Draw Bubbles
 
@@ -74,26 +94,36 @@ void draw() {
       //Create splash effect if it hits the top of the window
       Bubble toPop = bubbles.get(i);
       bubbles.remove(i);
+      manualPop.rewind();
+      manualPop.play();
       
+
       Bubble a1 = new Bubble();
       Bubble a2 = new Bubble();
       Bubble a3 = new Bubble();
       Bubble a4 = new Bubble();
-      
+
       float x1 = random(-0.1, 0);
       float x2 = random(0, 0.1);
       float newSize = toPop.aSize/16;
       float y1 = random(0.0, 0.2);
 
-      a1.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1);
-      a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y1);
-      a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1);
-      a4.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y1);
+      a1.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1, toPop.alive);
+      a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y1, toPop.alive);
+      a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1, toPop.alive);
+      a4.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y1, toPop.alive);
 
       bubbles.add(a1);
       bubbles.add(a2);
       bubbles.add(a3);
       bubbles.add(a4);
+
+      if (toPop.alive == false) {
+        bubbles.remove(a1);
+        bubbles.remove(a2);
+        bubbles.remove(a3);
+        bubbles.remove(a4);
+      }
     }
   }
 
@@ -115,12 +145,14 @@ void mousePressed() { // user directly popping bubbles upon click
       if (bubbles.get(i).isPopped() || bubbles.get(i).popTop()) {
         Bubble toPop = bubbles.get(i);
         bubbles.remove(i);
-        
+        handPop.rewind();
+        handPop.play();
+
         Bubble a1 = new Bubble();
         Bubble a2 = new Bubble();
         Bubble a3 = new Bubble();
         Bubble a4 = new Bubble();
-        
+
         float x1 = random(-0.2, -0.1);
         float x2 = random(-0.1, 0);
         float x3 = random(0, 0.1);
@@ -130,15 +162,23 @@ void mousePressed() { // user directly popping bubbles upon click
         float y2 = random(-0.2, 0.0);
         float y3 = 0;
 
-        a1.splashes(toPop.x + random(-1, 1), toPop.y, newSize, x1, y1);
-        a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y3);
-        a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x3, y2);
-        a4.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x4, y3);
-        
+
+        a1.splashes(toPop.x + random(-1, 1), toPop.y, newSize, x1, y1, toPop.alive);
+        a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y3, toPop.alive);
+        a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x3, y2, toPop.alive);
+        a4.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x4, y3, toPop.alive);
+
         bubbles.add(a1);
         bubbles.add(a2);
         bubbles.add(a3);
         bubbles.add(a4);
+
+        if (toPop.alive == false) {
+          bubbles.remove(a1);
+          bubbles.remove(a2);
+          bubbles.remove(a3);
+          bubbles.remove(a4);
+        }
       }
     }
   }
