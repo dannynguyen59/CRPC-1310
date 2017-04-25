@@ -25,13 +25,16 @@ boolean canPop = true;
 int currFrames = 0;
 int framesToPop = 50;
 
+
+
 void setup() {
   frameRate(60);
   size(800, 800);
   noCursor();
 }
 
-void draw() {
+void draw() { 
+
   if (currFrames >= framesToPop) {
     canPop = true;
     currFrames = 0;
@@ -47,8 +50,10 @@ void draw() {
     long lower = round(minSpawnTime);
     long upper = round(maxSpawnTime);
     nextSpawnTime = nextSpawnTime + round(random(lower, upper));
-
+  
+ 
     bubbles.add(new Bubble()); //SPAWN BUBBLES
+  
   }
   // Draw Bubbles
   for (int i = bubbles.size()-1; i>=0; i--) { //to-do: traverse this backwards
@@ -67,7 +72,7 @@ void draw() {
         float x2 = random(0, 0.1);
         float newSize = toPop.aSize/16;
         float y1 = random(0.0, 0.2);
-       
+    
         a1.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1);
         a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y1);
         a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x1, y1);
@@ -76,6 +81,7 @@ void draw() {
         bubbles.add(a2);
         bubbles.add(a3);
         bubbles.add(a4);
+
   }
     
   }
@@ -109,6 +115,7 @@ void mousePressed() { // user directly popping bubbles upon click
         float y1 = random(0.0, 0.2);
         float y2 = random(-0.2, 0.0);
         float y3 = 0;
+  
         a1.splashes(toPop.x + random(-1, 1), toPop.y, newSize, x1, y1);
         a2.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x2, y3);
         a3.splashes(toPop.x+ random(-1, 1), toPop.y, newSize, x3, y2);

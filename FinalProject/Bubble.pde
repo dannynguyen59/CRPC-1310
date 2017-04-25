@@ -16,7 +16,8 @@ class Bubble {
     xSpeed = random(-0.2,0.2);
     ySpeed = random(-0.9,-1.0);
     c = color(random(100,150),random(100,150),random(200,255));
-    clearBubs = random(50,100);
+    clearBubs = 50;
+    //random(50,100);
   }
   
   void splashes(float x, float y, float newSize, float xSpeed, float ySpeed) {
@@ -29,9 +30,15 @@ class Bubble {
   
   void drawShape() {
     fill(c,clearBubs);
-    stroke(1);
-    stroke(c);
+    noStroke();
+    //stroke(1);
+    //stroke(c);
     ellipse(x,y,aSize,aSize);
+    if (aSize < 10) {
+      clearBubs -= 0.5;
+    } if (clearBubs == 0) {
+      alive = false;
+    }
   }
   
   void move() {
@@ -47,6 +54,6 @@ class Bubble {
  }
  
  boolean popTop() {
-   return ( y <= aSize/2);
+   return ( y < 0);
  }
 }
