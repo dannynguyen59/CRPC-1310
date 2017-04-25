@@ -16,7 +16,7 @@ class Bubble {
     xSpeed = random(-0.2,0.2);
     ySpeed = random(-0.9,-1.0);
     c = color(random(100,150),random(100,150),random(200,255));
-    clearBubs = 80;
+    clearBubs = 150;
     //random(50,100);
   }
   
@@ -29,6 +29,7 @@ class Bubble {
   }
   
   void drawShape() {
+    
     fill(c,clearBubs);
     noStroke();
     ellipse(x,y,aSize,aSize);

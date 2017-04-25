@@ -27,6 +27,7 @@ boolean canPop = true;
 int currFrames = 0;
 int framesToPop = 50;
 PImage bgImg;
+PImage clicker;
 
 
 
@@ -34,13 +35,14 @@ void setup() {
   frameRate(60);
   size(800, 800);
   noCursor();
-  bgImg = loadImage("grassbg.bmp");
+  bgImg = loadImage("cloudbg.jpg");
   bgImg.loadPixels();
+  clicker = loadImage("bird.jpg");
+  clicker.loadPixels();
 }
 
 void draw() { 
   image(bgImg,0,0);
-
   if (currFrames >= framesToPop) {
     canPop = true;
     currFrames = 0;
@@ -49,8 +51,9 @@ void draw() {
 
 
   //fade out bubble trails
-  fill(0,0,255, 50);
+  fill(255, 50);
   rect(-5, -5, width+5, height+5);
+  
 
   //time spawning of Bubbles
   if (millis() > nextSpawnTime) {
@@ -62,6 +65,7 @@ void draw() {
     bubbles.add(new Bubble()); //SPAWN BUBBLES
   }
   // Draw Bubbles
+
   for (int i = bubbles.size()-1; i>=0; i--) { //to-do: traverse this backwards
     (bubbles.get(i)).drawShape();
     (bubbles.get(i)).move(); 
@@ -96,6 +100,7 @@ void draw() {
   // draw an indicator of where the cursor is
   stroke(0, 0, 255, 50);
   strokeWeight(1);
+  //image(clicker,mouseX,mouseY);
   line(mouseX-5, mouseY-5, mouseX+5, mouseY+5);
   line(mouseX+5, mouseY-5, mouseX-5, mouseY+5);
 }
