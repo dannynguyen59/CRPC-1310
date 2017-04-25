@@ -26,6 +26,7 @@ float mSize = 30;
 boolean canPop = true;
 int currFrames = 0;
 int framesToPop = 50;
+PImage bgImg;
 
 
 
@@ -33,9 +34,12 @@ void setup() {
   frameRate(60);
   size(800, 800);
   noCursor();
+  bgImg = loadImage("grassbg.bmp");
+  bgImg.loadPixels();
 }
 
 void draw() { 
+  image(bgImg,0,0);
 
   if (currFrames >= framesToPop) {
     canPop = true;
@@ -43,8 +47,9 @@ void draw() {
   }
   currFrames++;
 
+
   //fade out bubble trails
-  fill(255, 50);
+  fill(0,0,255, 50);
   rect(-5, -5, width+5, height+5);
 
   //time spawning of Bubbles
