@@ -30,6 +30,7 @@ long defMax = 1500;
 long minSpawnTime = 1000;
 long maxSpawnTime = 2000;
 long nextSpawnTime = round(random(minSpawnTime, maxSpawnTime));
+long nextJumpTime = round(random(minSpawnTime, maxSpawnTime));
 float mSize = 30;
 boolean canPop = true;
 int currFrames = 0;
@@ -39,6 +40,7 @@ PImage clicker;
 String startText = "START";
 PFont bubbly;
 float bubblyFade = 255;
+float textJump = 0;
 
 Minim m;
 AudioPlayer handPop;
@@ -93,17 +95,12 @@ void draw() {
   fill(255, 50);
   rect(-5, -5, width+5, height+5);
 
-  //textSize(100);
-  //text(startText, 300,400);
-  //textSize(50);
-  //text("'Press space for bubbles!", 150, 450);
-
-
   //time spawning of Bubbles
   if (millis() > nextSpawnTime) {
     long lower = round(minSpawnTime);
     long upper = round(maxSpawnTime);
     nextSpawnTime = nextSpawnTime + round(random(lower, upper));
+    
 
     if (key == ' ' ) {
       bubbles.add(new Bubble()); //SPAWN BUBBLES
@@ -215,12 +212,21 @@ void mousePressed() { // user directly popping bubbles upon click
 }
 
 void bubblyText() {
+  float titleDefault = 100;
+  float titleSize = titleDefault + textJump;
+  textJump+=1;
+  if (titleSize >= 105) {
+    textJump-=1;
+  }
+  if (titleSize <= 100) {
+     textJump+=1;
+  }
   fill(0, 105, 255);
   textSize(30);
   text("Danny Nguyen", 30, 780);
   fill(30+random(-50, 50), 250, 230+random(-50, 50));
   textMode(CENTER);
-  textSize(100);
+  textSize(titleDefault + textJump);
   text("BUBBLE GENERATOR", 30, 100);
   fill(255);
   textSize(50);

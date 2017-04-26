@@ -10,7 +10,7 @@ class Bubble {
   float clearBubs = 0;
   
   Bubble() {
-    x = mouseX; //Bubbles come from middle  
+    x = random(0,width); //Bubbles spawns from anywhere on vertically  
     y = height + aSize;
     aSize = random(50,100);
     xSpeed = random(-0.2,0.2);
