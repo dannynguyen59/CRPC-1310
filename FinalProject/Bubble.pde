@@ -15,8 +15,9 @@ class Bubble {
     aSize = random(50,100);
     xSpeed = random(-0.2,0.2);
     ySpeed = random(-0.9,-1.0);
+    
     c = color(random(70,100),random(150,200),random(220,255));
-    clearBubs = 150;
+    clearBubs = 100;
     //random(50,100);
   }
   
@@ -30,18 +31,16 @@ class Bubble {
   }
   
   void drawShape() {
-    
+    //rectMode(CENTER);
+    //blendMode();
+    rect(x-aSize/2+random(-0.5,0.5),y-aSize/2+random(-0.5,0.5),aSize,aSize,50);
     fill(255,clearBubs);
     ellipse(x,y,aSize,aSize);
     fill(c,clearBubs);
     stroke(255,clearBubs);
     ellipse(x,y,aSize,aSize);
-    pushMatrix();
-    translate(x,y);
-    rotate(0.1);
     fill(255,clearBubs);
     ellipse(x+random(-0.8,0.8)+aSize/4, y+random(-0.8,0.8)+aSize/4, aSize/10,aSize/10);
-    popMatrix();
     if (aSize < 10) {
       clearBubs -= 0.5;
     } if (clearBubs == 0) {
@@ -58,7 +57,7 @@ class Bubble {
   }
   
   boolean isPopped() {
-    return (mouseY <= y + aSize && mouseY >= y - aSize && mouseX <= x+aSize && mouseX >= x-aSize);
+    return (mouseY <= y + aSize/2 && mouseY >= y - aSize/2 && mouseX <= x+aSize/2 && mouseX >= x-aSize/2);
  }
  
  boolean popTop() {

@@ -2,7 +2,8 @@
 Danny Nguyen
  CRPC 1310
  Interactive Bubble Generator
- Credits to "Simple Asteroids Game" by Donya Quick
+ Credits to "Simple Asteroids Game" by Donya Quick for Meteor to Bubble Coding
+ Credits to "LightsOut Demo" by Donya Quick and Class for Audio Coding
  
  goals : 
  x Bubbles appear when you press your spacebar key
@@ -24,10 +25,10 @@ import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
 ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
-long defMin = 800;
-long defMax = 1000;
-long minSpawnTime = 500;
-long maxSpawnTime = 1000;
+long defMin = 1000;
+long defMax = 1500;
+long minSpawnTime = 1000;
+long maxSpawnTime = 2000;
 long nextSpawnTime = round(random(minSpawnTime, maxSpawnTime));
 float mSize = 30;
 boolean canPop = true;
@@ -35,10 +36,15 @@ int currFrames = 0;
 int framesToPop = 50;
 PImage bgImg;
 PImage clicker;
+String startText = "START";
+PFont bubbly;
+float bubblyFade = 255;
 
 Minim m;
 AudioPlayer handPop;
 AudioPlayer manualPop;
+AudioPlayer spawnBubs;
+AudioPlayer spawnStop;
 
 
 
@@ -46,18 +52,34 @@ void setup() {
   frameRate(60);
   size(800, 800);
   noCursor();
-  
+
   bgImg = loadImage("cloudbg.jpg");
   bgImg.loadPixels();
   clicker = loadImage("bird.jpg");
   clicker.loadPixels();
-  
+
   m = new Minim(this);
   handPop = m.loadFile("Blop.mp3");
   manualPop = m.loadFile("WaterDrop.mp3");
+  spawnBubs = m.loadFile("cancel.mp3");
+  spawnStop = m.loadFile("start.mp3");
+  bubbly = createFont("bubblebuttacad.ttf", 50);
+  textFont(bubbly);
 }
 
 void draw() { 
+
+
+  if (key == ' ' ) {
+    spawnBubs.rewind();
+    spawnBubs.play();
+  } else if (key == 'c') {
+    spawnStop.rewind();
+    spawnStop.play();
+  } else {
+    spawnBubs.pause();
+    spawnStop.pause();
+  }
   image(bgImg, 0, 0);
 
   if (currFrames >= framesToPop) {
@@ -67,9 +89,14 @@ void draw() {
   currFrames++;
 
 
-  //fade out bubble trails
+  //makes bg lighter
   fill(255, 50);
   rect(-5, -5, width+5, height+5);
+
+  //textSize(100);
+  //text(startText, 300,400);
+  //textSize(50);
+  //text("'Press space for bubbles!", 150, 450);
 
 
   //time spawning of Bubbles
@@ -85,18 +112,21 @@ void draw() {
     }
   }
   // Draw Bubbles
+  bubblyText();
+
 
   for (int i = bubbles.size()-1; i>=0; i--) { //to-do: traverse this backwards
     (bubbles.get(i)).drawShape();
     (bubbles.get(i)).move(); 
     //Remove bubbles if it reaches the top or if it is clicked
-    if (!bubbles.get(i).alive || bubbles.get(i).popTop()) {
+    if (bubbles.get(i).popTop()) {
+      manualPop.rewind();
+      manualPop.play();
       //Create splash effect if it hits the top of the window
       Bubble toPop = bubbles.get(i);
       bubbles.remove(i);
-      manualPop.rewind();
-      manualPop.play();
-      
+
+
 
       Bubble a1 = new Bubble();
       Bubble a2 = new Bubble();
@@ -181,5 +211,27 @@ void mousePressed() { // user directly popping bubbles upon click
         }
       }
     }
+  }
+}
+
+void bubblyText() {
+  fill(0, 105, 255);
+  textSize(30);
+  text("Danny Nguyen", 30, 780);
+  fill(30+random(-50, 50), 250, 230+random(-50, 50));
+  textMode(CENTER);
+  textSize(100);
+  text("BUBBLE GENERATOR", 30, 100);
+  fill(255);
+  textSize(50);
+  if (key == ' ' ) {
+    text("Press 'c' to stop bubbles.", 145, 135);
+  } else if (key == 'c') {
+    text("Press 'space' to spawn bubbles.", 95, 135);
+  } else {
+    textSize(100);
+    text("START", 255, 425);
+    textSize(50);
+    text("Press 'space' to spawn bubbles.", 95, 135);
   }
 }
