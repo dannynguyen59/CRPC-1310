@@ -41,6 +41,9 @@ String startText = "START";
 PFont bubbly;
 float bubblyFade = 255;
 float textJump = 0;
+  float titleDefault = 100;
+
+
 
 Minim m;
 AudioPlayer handPop;
@@ -71,7 +74,6 @@ void setup() {
 
 void draw() { 
 
-
   if (key == ' ' ) {
     spawnBubs.rewind();
     spawnBubs.play();
@@ -100,7 +102,7 @@ void draw() {
     long lower = round(minSpawnTime);
     long upper = round(maxSpawnTime);
     nextSpawnTime = nextSpawnTime + round(random(lower, upper));
-    
+
 
     if (key == ' ' ) {
       bubbles.add(new Bubble()); //SPAWN BUBBLES
@@ -108,7 +110,15 @@ void draw() {
       bubbles.remove(new Bubble()); // STOPS THE SPAWN
     }
   }
-  // Draw Bubbles
+  // Show Texts
+      float titleSize = titleDefault + textJump;
+    textJump++;
+  if (titleSize > titleDefault) {
+    textJump-=1;
+  }
+  if (titleSize < titleDefault) {
+    textJump+=1;
+  } 
   bubblyText();
 
 
@@ -212,24 +222,17 @@ void mousePressed() { // user directly popping bubbles upon click
 }
 
 void bubblyText() {
-  float titleDefault = 100;
-  float titleSize = titleDefault + textJump;
-  textJump+=1;
-  if (titleSize >= 105) {
-    textJump-=1;
-  }
-  if (titleSize <= 100) {
-     textJump+=1;
-  }
   fill(0, 105, 255);
   textSize(30);
   text("Danny Nguyen", 30, 780);
+
   fill(30+random(-50, 50), 250, 230+random(-50, 50));
-  textMode(CENTER);
+  //textMode(CENTER);
   textSize(titleDefault + textJump);
   text("BUBBLE GENERATOR", 30, 100);
   fill(255);
   textSize(50);
+
   if (key == ' ' ) {
     text("Press 'c' to stop bubbles.", 145, 135);
   } else if (key == 'c') {
