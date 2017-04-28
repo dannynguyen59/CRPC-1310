@@ -52,7 +52,7 @@ String startText = "START";
 PFont bubbly;
 float bubblyFade = 255;
 float textJump = 0;
-  float titleDefault = 100;
+float titleDefault = 100;
 
 
 
@@ -112,7 +112,7 @@ void draw() {
     long lower1 = round(minSpawnTime+5000);
     long upper2 = round(maxSpawnTime+5000);
     nextSpawnTime2 = nextSpawnTime2 + round(random(lower1, upper2));
-        birds.add(new Bird());
+    birds.add(new Bird());
   }
   //time spawning of Bubbles
   if (millis() > nextSpawnTime) {
@@ -125,10 +125,10 @@ void draw() {
       bubbles.remove(new Bubble()); // STOPS THE SPAWN
     }
   }
-  
+
   // Show Texts [NOT WORKING]
-      float titleSize = titleDefault + textJump;
-    textJump++;
+  float titleSize = titleDefault + textJump;
+  textJump++;
   if (titleSize >= titleDefault) {
     textJump-=1;
   }
@@ -136,10 +136,10 @@ void draw() {
     textJump+=1;
   } 
   bubblyText();
-  
+
   for (int i = birds.size()-1; i>=0; i--) { //to-do: traverse this backwards
     (birds.get(i)).drawBird();
-    (birds.get(i)).move(); 
+    (birds.get(i)).move();
   }
 
   for (int i = bubbles.size()-1; i>=0; i--) { //to-do: traverse this backwards
