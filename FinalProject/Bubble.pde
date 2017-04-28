@@ -15,7 +15,6 @@ class Bubble {
     aSize = random(50,100);
     xSpeed = random(-0.2,0.2);
     ySpeed = random(-0.9,-1.0);
-    
     c = color(random(70,100),random(150,200),random(220,255));
     clearBubs = 100;
     //random(50,100);

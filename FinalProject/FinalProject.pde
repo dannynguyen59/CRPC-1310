@@ -4,6 +4,14 @@ Danny Nguyen
  Interactive Bubble Generator
  Credits to "Simple Asteroids Game" by Donya Quick for Meteor to Bubble Coding
  Credits to "LightsOut Demo" by Donya Quick and Class for Audio Coding
+ Credits to "doodle_bug_demo3" by Donya Quick and Class for Image processing and Flip
+ Sources: 
+ https://processing.org/reference/ (Help + New code use; text, img, etc)
+ http://soundbible.com/ (Sound Effects)
+ http://google.com/ (Background Image)
+ http://www.maplesimulator.com/programs/bannedstory (Bird Image)
+ http://www.dafont.com/ (Font)
+ PaintNet (Image editor)
  
  goals : 
  x Bubbles appear when you press your spacebar key
@@ -25,12 +33,15 @@ import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
 ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+ArrayList<Bird> birds = new ArrayList<Bird>();
+
 long defMin = 1000;
 long defMax = 1500;
 long minSpawnTime = 1000;
 long maxSpawnTime = 2000;
 long nextSpawnTime = round(random(minSpawnTime, maxSpawnTime));
-long nextJumpTime = round(random(minSpawnTime, maxSpawnTime));
+long nextSpawnTime2 = round(random(minSpawnTime, maxSpawnTime));
+
 float mSize = 30;
 boolean canPop = true;
 int currFrames = 0;
@@ -73,7 +84,6 @@ void setup() {
 }
 
 void draw() { 
-
   if (key == ' ' ) {
     spawnBubs.rewind();
     spawnBubs.play();
@@ -97,30 +107,40 @@ void draw() {
   fill(255, 50);
   rect(-5, -5, width+5, height+5);
 
+  //time spawning of Birds
+  if (millis() > nextSpawnTime2) {
+    long lower1 = round(minSpawnTime+5000);
+    long upper2 = round(maxSpawnTime+5000);
+    nextSpawnTime2 = nextSpawnTime2 + round(random(lower1, upper2));
+        birds.add(new Bird());
+  }
   //time spawning of Bubbles
   if (millis() > nextSpawnTime) {
     long lower = round(minSpawnTime);
     long upper = round(maxSpawnTime);
     nextSpawnTime = nextSpawnTime + round(random(lower, upper));
-
-
     if (key == ' ' ) {
       bubbles.add(new Bubble()); //SPAWN BUBBLES
     } else if (key == 'c') {
       bubbles.remove(new Bubble()); // STOPS THE SPAWN
     }
   }
-  // Show Texts
+  
+  // Show Texts [NOT WORKING]
       float titleSize = titleDefault + textJump;
     textJump++;
-  if (titleSize > titleDefault) {
+  if (titleSize >= titleDefault) {
     textJump-=1;
   }
-  if (titleSize < titleDefault) {
+  if (titleSize <= titleDefault) {
     textJump+=1;
   } 
   bubblyText();
-
+  
+  for (int i = birds.size()-1; i>=0; i--) { //to-do: traverse this backwards
+    (birds.get(i)).drawBird();
+    (birds.get(i)).move(); 
+  }
 
   for (int i = bubbles.size()-1; i>=0; i--) { //to-do: traverse this backwards
     (bubbles.get(i)).drawShape();
