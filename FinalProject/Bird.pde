@@ -36,15 +36,15 @@ class Bird {
   void drawBird() {
     //LINE 38-40 CODE FOUND ON PROCESSING FORUM "how to reset count time", USER: csteinlehner
     m = millis() - lastTime;
-    if (millis()> lastTime + 7000) {
+    if (millis()> lastTime + 4000) {
       lastTime = millis();
     } 
 
-    if (m > 0 && m < 2000 || m > 4000 && m < 6000) {
+    if (m > 0 && m < 1000 || m > 2000 && m < 3000) {
       image(img, x, y);  
       img.resize(100, 100);
     } 
-    if (m > 2000 && m < 4000|| m > 6000 && m < 8000) {
+    if (m > 1000 && m < 2000|| m > 3000 && m < 4000) {
       image(img2, x, y); 
       img2.resize(100, 100);
     }

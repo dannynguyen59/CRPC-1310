@@ -16,8 +16,8 @@ class Bubble {
     xSpeed = random(-0.2, 0.2);
     ySpeed = random(-0.9, -1.0);
     c = color(random(70, 100), random(150, 200), random(220, 255));
-    clearBubs = 100;
-    //random(50,100);
+    clearBubs = 125;
+
   }
 
   void splashes(float x, float y, float newSize, float xSpeed, float ySpeed, boolean Alive) {
@@ -32,7 +32,7 @@ class Bubble {
   void drawShape() {
     //rectMode(CENTER);
     //blendMode();
-    rect(x-aSize/2+random(-0.5, 0.5), y-aSize/2+random(-0.5, 0.5), aSize, aSize, 50);
+    //rect(x-aSize/2+random(-0.5, 0.5), y-aSize/2+random(-0.5, 0.5), aSize, aSize, 50);
     fill(255, clearBubs);
     ellipse(x, y, aSize, aSize);
     fill(c, clearBubs);

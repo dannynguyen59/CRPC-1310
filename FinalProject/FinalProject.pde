@@ -6,7 +6,7 @@ Danny Nguyen
  Credits to "LightsOut Demo" by Donya Quick and Class for Audio Coding
  Credits to "doodle_bug_demo3" by Donya Quick and Class for Image processing and Flip
  Sources: 
- https://processing.org/reference/ (Help + New code use; text, img, etc)
+ https://processing.org/reference/ (For Help + New code use; text, img, etc)
  http://soundbible.com/ (Sound Effects)
  http://google.com/ (Background Image)
  http://www.maplesimulator.com/programs/bannedstory (Bird Image)
@@ -49,10 +49,9 @@ int framesToPop = 50;
 PImage bgImg;
 PImage clicker;
 String startText = "START";
+
 PFont bubbly;
 float bubblyFade = 255;
-float textJump = 0;
-float titleDefault = 100;
 
 
 
@@ -126,15 +125,6 @@ void draw() {
     }
   }
 
-  // Show Texts [NOT WORKING]
-  float titleSize = titleDefault + textJump;
-  textJump++;
-  if (titleSize >= titleDefault) {
-    textJump-=1;
-  }
-  if (titleSize <= titleDefault) {
-    textJump+=1;
-  } 
   bubblyText();
 
   for (int i = birds.size()-1; i>=0; i--) { //to-do: traverse this backwards
@@ -245,16 +235,13 @@ void bubblyText() {
   fill(0, 105, 255);
   textSize(30);
   text("Danny Nguyen", 30, 780);
-
-  fill(30+random(-50, 50), 250, 230+random(-50, 50));
-  //textMode(CENTER);
-  textSize(titleDefault + textJump);
+  fill(80, 255, 230+random(-50, 50));
+  textSize(100);
   text("BUBBLE GENERATOR", 30, 100);
   fill(255);
   textSize(50);
-
   if (key == ' ' ) {
-    text("Press 'c' to stop bubbles.", 145, 135);
+    text("Press 'c' to stop bubble spawns.", 95, 135);
   } else if (key == 'c') {
     text("Press 'space' to spawn bubbles.", 95, 135);
   } else {
