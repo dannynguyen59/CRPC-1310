@@ -1,10 +1,11 @@
 /*
 Danny Nguyen
  CRPC 1310
- Interactive Bubble Generator
+ Interactive Bubble Generator by Danny Nguyen
  Credits to "Simple Asteroids Game" by Donya Quick for Meteor to Bubble Coding
  Credits to "LightsOut Demo" by Donya Quick and Class for Audio Coding
  Credits to "doodle_bug_demo3" by Donya Quick and Class for Image processing and Flip
+ Credits to PROCESSING FORUM "how to reset count time" by USER: csteinlehner
  Sources: 
  https://processing.org/reference/ (For Help + New code use; text, img, etc)
  http://soundbible.com/ (Sound Effects)
@@ -21,8 +22,8 @@ Danny Nguyen
  x Bubbles will fade and show splash effect
  x Splash effect will be mini shapes exploding out of bubble
  x Make splash/extra shapes disappear after some time
+ x Aesthetics
  
- -aesthetics
  */
 
 import ddf.minim.*;
@@ -125,14 +126,14 @@ void draw() {
     }
   }
 
-  bubblyText();
+  bubblyText(); //shows text
 
-  for (int i = birds.size()-1; i>=0; i--) { //to-do: traverse this backwards
+  for (int i = birds.size()-1; i>=0; i--) { //generate birds
     (birds.get(i)).drawBird();
     (birds.get(i)).move();
   }
 
-  for (int i = bubbles.size()-1; i>=0; i--) { //to-do: traverse this backwards
+  for (int i = bubbles.size()-1; i>=0; i--) { //generate bubbles
     (bubbles.get(i)).drawShape();
     (bubbles.get(i)).move(); 
     //Remove bubbles if it reaches the top or if it is clicked
@@ -142,8 +143,6 @@ void draw() {
       //Create splash effect if it hits the top of the window
       Bubble toPop = bubbles.get(i);
       bubbles.remove(i);
-
-
 
       Bubble a1 = new Bubble();
       Bubble a2 = new Bubble();
@@ -165,7 +164,7 @@ void draw() {
       bubbles.add(a3);
       bubbles.add(a4);
 
-      if (toPop.alive == false) {
+      if (toPop.alive == false) { //removes splashes 
         bubbles.remove(a1);
         bubbles.remove(a2);
         bubbles.remove(a3);
@@ -220,7 +219,7 @@ void mousePressed() { // user directly popping bubbles upon click
         bubbles.add(a3);
         bubbles.add(a4);
 
-        if (toPop.alive == false) {
+        if (toPop.alive == false) { //remove splashes
           bubbles.remove(a1);
           bubbles.remove(a2);
           bubbles.remove(a3);
@@ -231,6 +230,7 @@ void mousePressed() { // user directly popping bubbles upon click
   }
 }
 
+//adds title and instruction text
 void bubblyText() {
   fill(0, 105, 255);
   textSize(30);
@@ -240,6 +240,7 @@ void bubblyText() {
   text("BUBBLE GENERATOR", 30, 100);
   fill(255);
   textSize(50);
+  //instructions; space to spawn, 'c' to stop.
   if (key == ' ' ) {
     text("Press 'c' to stop bubble spawns.", 95, 135);
   } else if (key == 'c') {

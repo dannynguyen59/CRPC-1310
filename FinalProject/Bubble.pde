@@ -30,9 +30,7 @@ class Bubble {
   }
 
   void drawShape() {
-    //rectMode(CENTER);
-    //blendMode();
-    //rect(x-aSize/2+random(-0.5, 0.5), y-aSize/2+random(-0.5, 0.5), aSize, aSize, 50);
+
     fill(255, clearBubs);
     ellipse(x, y, aSize, aSize);
     fill(c, clearBubs);

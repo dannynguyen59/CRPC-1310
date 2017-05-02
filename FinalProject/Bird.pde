@@ -40,15 +40,16 @@ class Bird {
       lastTime = millis();
     } 
 
-    if (m > 0 && m < 1000 || m > 2000 && m < 3000) {
+    if (m > 0 && m < 1000 || m > 2000 && m < 3000 || m > 4000 && m < 5000) {
       image(img, x, y);  
       img.resize(100, 100);
     } 
-    if (m > 1000 && m < 2000|| m > 3000 && m < 4000) {
+    if (m > 1000 && m < 2000|| m > 3000 && m < 4000 || m > 5000 && m < 6000) {
       image(img2, x, y); 
       img2.resize(100, 100);
     }
-
+    img.resize(100, 100);
+    img2.resize(100, 100);
     //println(m); check milliseconds
   }
 
