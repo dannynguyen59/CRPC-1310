@@ -11,6 +11,7 @@ class Bird {
   float ySpeed = 0;
   boolean alive = true; //life span
 
+
   long flapTime = 0;
   long flapTime2 = 2000;
   long nextFlapTime = 2000;
@@ -59,6 +60,10 @@ class Bird {
     if (x > width + img.width || x > width + img2.width) {
       alive = false;
     }
+  }
+ 
+  boolean chirp () {
+    return mouseX > x && mouseX < x + 50 && mouseY > y && mouseY < y + 50;
   }
 
   PImage flip(PImage orig) {

@@ -61,6 +61,7 @@ AudioPlayer handPop;
 AudioPlayer manualPop;
 AudioPlayer spawnBubs;
 AudioPlayer spawnStop;
+AudioPlayer flyBird;
 
 
 
@@ -79,6 +80,7 @@ void setup() {
   manualPop = m.loadFile("WaterDrop.mp3");
   spawnBubs = m.loadFile("cancel.mp3");
   spawnStop = m.loadFile("start.mp3");
+  flyBird = m.loadFile("Baby Chicks.wav");
   bubbly = createFont("bubblebuttacad.ttf", 50);
   textFont(bubbly);
 }
@@ -131,6 +133,12 @@ void draw() {
   for (int i = birds.size()-1; i>=0; i--) { //generate birds
     (birds.get(i)).drawBird();
     (birds.get(i)).move();
+  if ( birds.get(i).chirp()) {
+    flyBird.rewind();
+    flyBird.play();
+    flyBird.setLoopPoints(0,500);
+    flyBird.loopCount();
+  } 
   }
 
   for (int i = bubbles.size()-1; i>=0; i--) { //generate bubbles
